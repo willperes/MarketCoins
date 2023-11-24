@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension URL {
     var queryParameters: [String: String]? {
@@ -60,6 +61,21 @@ extension Double {
             return "\u{2193} \(value)%"
         } else {
             return "\u{2191} \(value)%"
+        }
+    }
+}
+
+extension UIImageView {
+    func loadImage(from url: String) {
+        guard let url = URL(string: url) else { return }
+        
+        DispatchQueue.global().async {
+            do {
+                let data = try Data(contentsOf: url)
+                DispatchQueue.main.async {
+                    self.image = UIImage(data: data)
+                }
+            } catch {}
         }
     }
 }
