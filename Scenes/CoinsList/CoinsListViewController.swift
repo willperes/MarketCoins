@@ -18,7 +18,7 @@ protocol CoinsListDisplayLogic: AnyObject {
     func displayError(error: String)
 }
 
-class CoinsListViewController: UIViewController {
+class CoinsListViewController: ViewController {
     @IBOutlet var globalCollectionView: UICollectionView! {
         didSet {
             globalCollectionView.dataSource = self
@@ -77,22 +77,23 @@ class CoinsListViewController: UIViewController {
     
     var interactor: CoinsListBusinessLogic?
     var router: (NSObjectProtocol & CoinsListRoutingLogic & CoinsListDataPassing)?
-
-    // MARK: Object lifecycle
   
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
+    // MARK: View lifecycle
+  
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubviews(coinsFilterView, topFilterView, priceChangePercentageFilterView, orderByFilterView)
+        
+        let nib = UINib(nibName: CoinHeaderView.identifier, bundle: nil)
+        listCoinsTableView.register(nib, forHeaderFooterViewReuseIdentifier: CoinHeaderView.identifier)
+        
+        doFetchGlobalValues()
+        doFetchListCoins()
     }
-  
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-  
+    
     // MARK: Setup
   
-    private func setup() {
+    override func setup() {
         let viewController = self
         let interactor = CoinsListInteractor()
         let presenter = CoinsListPresenter()
@@ -114,19 +115,6 @@ class CoinsListViewController: UIViewController {
                 router.perform(selector, with: segue)
             }
         }
-    }
-  
-    // MARK: View lifecycle
-  
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.addSubviews(coinsFilterView, topFilterView, priceChangePercentageFilterView, orderByFilterView)
-        
-        let nib = UINib(nibName: CoinHeaderView.identifier, bundle: nil)
-        listCoinsTableView.register(nib, forHeaderFooterViewReuseIdentifier: CoinHeaderView.identifier)
-        
-        doFetchGlobalValues()
-        doFetchListCoins()
     }
   
     func doFetchGlobalValues() {
@@ -162,7 +150,11 @@ extension CoinsListViewController: CoinsListDisplayLogic {
     }
     
     func displayError(error: String) {
-        print(error)
+        DispatchQueue.main.async {
+            self.showError(for: error, handler: { _ in
+                self.doFetchListCoins()
+            })
+        }
     }
 }
 

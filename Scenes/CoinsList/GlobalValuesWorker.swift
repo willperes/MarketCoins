@@ -41,13 +41,16 @@ extension GlobalValuesWorker: GlobalValuesDataProviderDelegate {
             fatalError("GlobalValuesWorker: Completion not implemented")
         }
         
-        if error.errorCode == 500 {
+        switch error.errorCode {
+        case 500:
             completion(.failure(.internalServerError))
-        } else if error.errorCode == 400 {
+        case 400:
             completion(.failure(.badRequestError))
-        } else if error.errorCode == 404 {
+        case 404:
             completion(.failure(.notFoundError))
-        } else {
+        case 429:
+            completion(.failure(.tooManyRequests))
+        default:
             completion(.failure(.undefinedError))
         }
     }

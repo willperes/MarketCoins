@@ -28,7 +28,9 @@ class GenericStoreRequest: GenericStoreProtocol {
             }
             
             do {
-                let string = String(data: data, encoding: .utf8)!
+//                let string = String(data: data, encoding: .utf8)!
+//                print("Data as JSON: ")
+//                print(string)
                 let object = try JSONDecoder().decode(T.self, from: data)
                 completion(object, nil)
             } catch {

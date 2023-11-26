@@ -38,8 +38,8 @@ class CoinsListInteractor: CoinsListBusinessLogic, CoinsListDataStore {
             switch result {
             case .success(let globalModel):
                 self.createGlobalValuesResponse(baseCoin: request.baseCoin, global: globalModel)
-            case .failure(let error):
-                self.presenter?.presentError(error: error)
+            case .failure:
+                self.presenter?.presentErrorForGlobalValues(baseCoin: request.baseCoin)
             }
         })
     }
@@ -69,7 +69,7 @@ class CoinsListInteractor: CoinsListBusinessLogic, CoinsListDataStore {
             
             presenter?.presentGlobalValues(response: response)
         } else {
-            presenter?.presentError(error: .undefinedError)
+            presenter?.presentErrorForGlobalValues(baseCoin: baseCoin)
         }
     }
     

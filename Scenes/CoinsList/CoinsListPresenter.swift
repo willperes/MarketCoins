@@ -14,6 +14,7 @@ import UIKit
 
 protocol CoinsListPresentationLogic {
     func presentGlobalValues(response: CoinsList.FetchGlobalValues.Response)
+    func presentErrorForGlobalValues(baseCoin: CoinsFilterEnum)
     func presentListCoins(response: [CoinsList.FetchListCoins.Response])
     func presentError(error: CryptocurrenciesError)
 }
@@ -29,6 +30,17 @@ class CoinsListPresenter: CoinsListPresentationLogic {
         for (_, value) in response.totalVolume {
             globalValues.append(CoinsList.FetchGlobalValues.ViewModel.GlobalValues(title: "Volume em 24hrs", value: value.toCurrency(from: response.baseCoin)))
         }
+        
+        let viewModel = CoinsList.FetchGlobalValues.ViewModel(globalValues: globalValues)
+        
+        viewController?.displayGlobalValues(viewModel: viewModel)
+    }
+    
+    func presentErrorForGlobalValues(baseCoin: CoinsFilterEnum) {
+        let globalValues: [CoinsList.FetchGlobalValues.ViewModel.GlobalValues] = [
+            CoinsList.FetchGlobalValues.ViewModel.GlobalValues(title: "Capitalização de Mercado Global", value: 0.0.toCurrency(from: baseCoin)),
+            CoinsList.FetchGlobalValues.ViewModel.GlobalValues(title: "Volume em 24hrs", value: 0.0.toCurrency(from: baseCoin))
+        ]
         
         let viewModel = CoinsList.FetchGlobalValues.ViewModel(globalValues: globalValues)
         
