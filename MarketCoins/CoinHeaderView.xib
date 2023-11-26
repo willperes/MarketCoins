@@ -112,6 +112,9 @@
                 <constraint firstAttribute="trailing" secondItem="sEd-WZ-N8S" secondAttribute="trailing" constant="8" id="vbo-Xq-pMD"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="priceChangePercentualLabel" destination="Vb8-ai-7af" id="8MX-uA-6DI"/>
+            </connections>
             <point key="canvasLocation" x="129.7709923664122" y="-11.267605633802818"/>
         </view>
     </objects>

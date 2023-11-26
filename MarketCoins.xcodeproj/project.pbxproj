@@ -41,6 +41,8 @@
 		3AD5A5AE2B0C233C0050DC87 /* CoinsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD5A5AD2B0C233C0050DC87 /* CoinsStore.swift */; };
 		3AD5A5B02B0C23420050DC87 /* GlobalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD5A5AF2B0C23420050DC87 /* GlobalStore.swift */; };
 		3AD5A5B32B0C28930050DC87 /* ListCoinsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD5A5B22B0C28930050DC87 /* ListCoinsDataProvider.swift */; };
+		3AFBE9B52B114BC300675550 /* FiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBE9B42B114BC300675550 /* FiltersView.swift */; };
+		3AFBE9B72B115D0000675550 /* FiltersUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBE9B62B115D0000675550 /* FiltersUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +82,8 @@
 		3AD5A5AD2B0C233C0050DC87 /* CoinsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsStore.swift; sourceTree = "<group>"; };
 		3AD5A5AF2B0C23420050DC87 /* GlobalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStore.swift; sourceTree = "<group>"; };
 		3AD5A5B22B0C28930050DC87 /* ListCoinsDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCoinsDataProvider.swift; sourceTree = "<group>"; };
+		3AFBE9B42B114BC300675550 /* FiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersView.swift; sourceTree = "<group>"; };
+		3AFBE9B62B115D0000675550 /* FiltersUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +239,8 @@
 				3AB6D07B2B0BEE7F00825464 /* Info.plist */,
 				3A5F5B222B0C060C008F1B97 /* Extensions.swift */,
 				3A5FC9D92B0EA82C00DF6CAB /* CryptocurrenciesError.swift */,
+				3AFBE9B42B114BC300675550 /* FiltersView.swift */,
+				3AFBE9B62B115D0000675550 /* FiltersUtils.swift */,
 			);
 			path = MarketCoins;
 			sourceTree = "<group>";
@@ -326,6 +332,7 @@
 				3A5FC9D52B0EA41B00DF6CAB /* CoinsListViewController.swift in Sources */,
 				3A5F5B252B0C07A5008F1B97 /* CoinsRouter.swift in Sources */,
 				3A5F5B272B0C07AE008F1B97 /* GlobalRouter.swift in Sources */,
+				3AFBE9B52B114BC300675550 /* FiltersView.swift in Sources */,
 				3AD5A5B32B0C28930050DC87 /* ListCoinsDataProvider.swift in Sources */,
 				3AA59ACC2B0FEB5E00C8F6C3 /* CoinViewCell.swift in Sources */,
 				3A5FC9D22B0EA41B00DF6CAB /* CoinsListWorker.swift in Sources */,
@@ -341,6 +348,7 @@
 				3A5FC9D82B0EA7D000DF6CAB /* GlobalValuesWorker.swift in Sources */,
 				3AD5A5AE2B0C233C0050DC87 /* CoinsStore.swift in Sources */,
 				3AD5A5B02B0C23420050DC87 /* GlobalStore.swift in Sources */,
+				3AFBE9B72B115D0000675550 /* FiltersUtils.swift in Sources */,
 				3A5F5B232B0C060C008F1B97 /* Extensions.swift in Sources */,
 				3AA59AC82B0FEB2F00C8F6C3 /* GlobalValuesViewCell.swift in Sources */,
 				3A5F5B0B2B0BF3F5008F1B97 /* CurrentDataModel.swift in Sources */,

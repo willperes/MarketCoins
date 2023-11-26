@@ -9,12 +9,14 @@ import UIKit
 
 class CoinHeaderView: UITableViewHeaderFooterView {
     static let identifier = "CoinHeaderView"
-
-    /*
-     // Only override draw() if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func draw(_ rect: CGRect) {
-         // Drawing code
-     }
-     */
+    
+    @IBOutlet weak var priceChangePercentualLabel: UILabel!
+    
+    func setupPriceChangePercentage(from filter: Filter) {
+        if filter.type == .priceChangePercentage {
+            if let priceChangePercentageFilter = PriceChangePercentageFilterEnum(rawValue: filter.key) {
+                priceChangePercentualLabel.text = priceChangePercentageFilter.title
+            }
+        }
+    }
 }

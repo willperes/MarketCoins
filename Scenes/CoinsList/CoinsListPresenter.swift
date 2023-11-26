@@ -23,11 +23,11 @@ class CoinsListPresenter: CoinsListPresentationLogic {
         var globalValues: [CoinsList.FetchGlobalValues.ViewModel.GlobalValues] = []
         
         for (_, value) in response.totalMarketCap {
-            globalValues.append(CoinsList.FetchGlobalValues.ViewModel.GlobalValues(title: "Capitalização de Mercado Global", value: value.toCurrency()))
+            globalValues.append(CoinsList.FetchGlobalValues.ViewModel.GlobalValues(title: "Capitalização de Mercado Global", value: value.toCurrency(from: response.baseCoin)))
         }
         
         for (_, value) in response.totalVolume {
-            globalValues.append(CoinsList.FetchGlobalValues.ViewModel.GlobalValues(title: "Volume em 24hrs", value: value.toCurrency()))
+            globalValues.append(CoinsList.FetchGlobalValues.ViewModel.GlobalValues(title: "Volume em 24hrs", value: value.toCurrency(from: response.baseCoin)))
         }
         
         let viewModel = CoinsList.FetchGlobalValues.ViewModel(globalValues: globalValues)
@@ -37,13 +37,21 @@ class CoinsListPresenter: CoinsListPresentationLogic {
     
     func presentListCoins(response: [CoinsList.FetchListCoins.Response]) {
         let coins = response.map { response in
-                var rank = "-"
+            var rank = "-"
             
             if let marketCapRank = response.marketCapRank {
                 rank = "\(marketCapRank)"
             }
             
-            return CoinsList.FetchListCoins.ViewModel.Coin(id: response.id, name: response.name, rank: rank, iconUrl: response.image, symbol: response.symbol.uppercased(), price: response.currentPrice.toCurrency(), priceChangePercentage: response.priceChangePercentage.toPercentage(), marketCapitalization: response.marketCap.toCurrency())
+            return CoinsList.FetchListCoins.ViewModel.Coin(
+                id: response.id,
+                name: response.name,
+                rank: rank, iconUrl: response.image,
+                symbol: response.symbol.uppercased(),
+                price: response.currentPrice.toCurrency(from: response.baseCoin),
+                priceChangePercentage: response.priceChangePercentage.toPercentage(),
+                marketCapitalization: response.marketCap.toCurrency(from: response.baseCoin)
+            )
         }
         
         let viewModel = CoinsList.FetchListCoins.ViewModel(coins: coins)

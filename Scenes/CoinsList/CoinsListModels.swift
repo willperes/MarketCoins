@@ -17,11 +17,11 @@ enum CoinsList {
 
     enum FetchGlobalValues {
         struct Request {
-            let baseCoin: String
+            let baseCoin: CoinsFilterEnum
         }
 
         struct Response {
-            let baseCoin: String
+            let baseCoin: CoinsFilterEnum
             let totalMarketCap: [String: Double]
             let totalVolume: [String: Double]
         }
@@ -38,14 +38,15 @@ enum CoinsList {
     
     enum FetchListCoins {
         struct Request {
-            let baseCoin: String
-            let orderBy: String
-            let top: Int
-            let pricePercentage: String
+            let baseCoin: CoinsFilterEnum
+            let orderBy: OrderByFilterEnum
+            let top: TopFilterEnum
+            let pricePercentage: PriceChangePercentageFilterEnum
         }
         
         struct Response {
-            let baseCoin, id, symbol, name, image: String
+            let baseCoin: CoinsFilterEnum
+            let id, symbol, name, image: String
             let currentPrice, marketCap: Double
             let marketCapRank: Int?
             let priceChangePercentage: Double

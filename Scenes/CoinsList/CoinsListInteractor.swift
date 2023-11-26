@@ -50,7 +50,7 @@ class CoinsListInteractor: CoinsListBusinessLogic, CoinsListDataStore {
         let top = request.top
         let percentagePrice = request.pricePercentage
         
-        coinListWorker?.doFetchListCoins(baseCoin: baseCoin, orderBy: orderBy, top: top, percentagePrice: percentagePrice, completion: { result in
+        coinListWorker?.doFetchListCoins(baseCoin: baseCoin.rawValue, orderBy: orderBy.rawValue, top: top.rawValue, percentagePrice: percentagePrice.rawValue, completion: { result in
             switch result {
             case .success(let listCoinsModel):
                 self.createListCoinsResponse(request: request, listCoins: listCoinsModel)
@@ -60,40 +60,53 @@ class CoinsListInteractor: CoinsListBusinessLogic, CoinsListDataStore {
         })
     }
     
-    private func createGlobalValuesResponse(baseCoin: String, global: GlobalModel?) {
+    private func createGlobalValuesResponse(baseCoin: CoinsFilterEnum, global: GlobalModel?) {
         if let global {
-            let totalMarketCap = global.data.totalMarketCap.filter { $0.key == baseCoin }
-            let totalVolume = global.data.totalVolume.filter { $0.key == baseCoin }
+            let totalMarketCap = global.data.totalMarketCap.filter { $0.key == baseCoin.rawValue }
+            let totalVolume = global.data.totalVolume.filter { $0.key == baseCoin.rawValue }
             
             let response = CoinsList.FetchGlobalValues.Response(baseCoin: baseCoin, totalMarketCap: totalMarketCap, totalVolume: totalVolume)
             
             presenter?.presentGlobalValues(response: response)
         } else {
-            self.presenter?.presentError(error: .undefinedError)
+            presenter?.presentError(error: .undefinedError)
         }
     }
     
     private func createListCoinsResponse(request: CoinsList.FetchListCoins.Request, listCoins: [CoinModel]?) {
         if let listCoins {
-            func priceChangePercentage(pricePercentage: String, coin: CoinModel) -> Double {
-                if pricePercentage == "1h" {
+            func priceChangePercentage(pricePercentage: PriceChangePercentageFilterEnum, coin: CoinModel) -> Double {
+                switch pricePercentage {
+                case .lastHour:
                     return coin.priceChangePercentage1H ?? 0.0
-                } else if pricePercentage == "24h" {
+                case .oneDay:
                     return coin.priceChangePercentage24H ?? 0.0
-                } else if pricePercentage == "7d" {
+                case .oneWeek:
                     return coin.priceChangePercentage7D ?? 0.0
-                } else {
+                case .oneMonth:
                     return coin.priceChangePercentage30D ?? 0.0
                 }
             }
             
             let response = listCoins.map { coin in
-                CoinsList.FetchListCoins.Response(baseCoin: request.baseCoin, id: coin.id, symbol: coin.symbol, name: coin.name, image: coin.image, currentPrice: coin.currentPrice ?? 0.0, marketCap: coin.marketCap ?? 0.0, marketCapRank: coin.marketCapRank, priceChangePercentage: priceChangePercentage(pricePercentage: request.pricePercentage, coin: coin))
+                CoinsList.FetchListCoins.Response(
+                    baseCoin: request.baseCoin,
+                    id: coin.id,
+                    symbol: coin.symbol,
+                    name: coin.name,
+                    image: coin.image,
+                    currentPrice: coin.currentPrice ?? 0.0,
+                    marketCap: coin.marketCap ?? 0.0,
+                    marketCapRank: coin.marketCapRank,
+                    priceChangePercentage: priceChangePercentage(
+                        pricePercentage: request.pricePercentage, coin: coin
+                    )
+                )
             }
             
             presenter?.presentListCoins(response: response)
         } else {
-            self.presenter?.presentError(error: .undefinedError)
+            presenter?.presentError(error: .undefinedError)
         }
     }
 }
